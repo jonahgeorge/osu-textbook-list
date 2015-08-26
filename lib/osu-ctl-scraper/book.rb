@@ -1,10 +1,14 @@
 module OsuCtlScraper
   class Book
-    # Returns an array of Books for the given options
+    RESOURCE = "/Faculty/GetTextbooks/"
+
+    # Returns an array of Books
     #
-    # @param  [Hash] options
+    # @param  [String] subject_code
+    # @param  [Integer] year
+    # @param  [Symbol] term Must be one of: "winter", "spring", "summer", or "fall"
     # @return [Array<Hash>]
-    def self.where(subject_code, year, term)
+    def self.find_by(subject_code, year, term)
       res = get_html(subject_code, year, term)
       html = format_response(res.body)
       process_html(subject_code, html)
@@ -15,7 +19,7 @@ module OsuCtlScraper
     # @param  [Symbol] term Must be one of: "winter", "spring", "summer", or "fall"
     # @return [String]
     def self.get_html(subject_code, year, term)
-      url = URI.parse("http://osubeaverstore.com/Faculty/GetTextbooks/")
+      url = URI.parse("#{ENDPOINT}#{RESOURCE}")
       params = form_params(subject_code, year, term)
       res = Net::HTTP.post_form(url, params)
     end
@@ -60,16 +64,18 @@ module OsuCtlScraper
       ng = Nokogiri::HTML(html)
       ng.css("tr:not(:first-child)").each do |row|
         book = process_row(row)
-        book[:subject_code] = subject_code
-        books << book
+        unless book.nil?
+          book[:subject_code] = subject_code
+          books << book
+        end
       end
       books
     end
 
     # @param  [Nokogiri::XML::Element] row
-    # @return [Hash]
+    # @return [Hash, nil]
     def self.process_row(row)
-      {
+      book = {
         course:      row.css("td:nth-child(1)").text.strip,
         section:     row.css("td:nth-child(2)").text.strip,
         instructor:  row.css("td:nth-child(3)").text.strip,
@@ -83,6 +89,9 @@ module OsuCtlScraper
         comments:    row.css("td:nth-child(11)").text.strip,
         req_date:    row.css("td:nth-child(12)").text.strip
       }
+
+      # Only return the book if is has an ISBN
+      book[:isbn].empty? ? nil : book
     end
   end
 end

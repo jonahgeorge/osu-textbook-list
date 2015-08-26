@@ -9,14 +9,15 @@ describe OsuCtlScraper::Department do
     end
   end
 
-  # describe "#process_option" do
-  #   it "should return the correct value" do
-  #     option = '<option value="AAA">AAA: NON-ADOPTED CLASS</option>'
-  #     control = { subject_code: 'AAA', title: 'NON-ADOPTED CLASS' }
-  #     result = OsuCtlScraper::Department.process_option(option)
-  #     expect(result).to eq(control)
-  #   end
-  # end
+  describe "#process_option" do
+    it "should return the correct value" do
+      data = '<option value="AAA">AAA: NON-ADOPTED CLASS</option>'
+      control = { subject_code: 'AAA', title: 'NON-ADOPTED CLASS' }
+      option = Nokogiri::HTML.fragment(data).css("option").first
+      result = OsuCtlScraper::Department.process_option(option)
+      expect(result).to eq(control)
+    end
+  end
 
   describe ".process_title" do
     it "should return the correct value" do

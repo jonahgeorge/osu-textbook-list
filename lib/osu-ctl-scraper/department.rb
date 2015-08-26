@@ -1,5 +1,7 @@
 module OsuCtlScraper
   class Department
+    RESOURCE = "/faculty/textbooks/"
+
     # @return [Array<Hash>]
     def self.all
       html = get_html
@@ -8,7 +10,7 @@ module OsuCtlScraper
 
     # @return [String] html
     def self.get_html
-      open("http://osubeaverstore.com/faculty/textbooks/").read
+      open("#{ENDPOINT}#{RESOURCE}").read
     end
 
     # @param  [String] html
