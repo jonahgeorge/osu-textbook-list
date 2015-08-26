@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'osu-ctl-scraper'
-  s.version     = '1.0.0'
+  s.version     = '1.0.1'
   s.date        = '2015-08-25'
   s.summary     = 'OSU Current Textbook List Scraper'
   s.description = 'A script to gather course data from Oregon State\'s Current Textbook List.'
