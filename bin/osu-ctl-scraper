@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require "csv"
+require "osu-ctl-scraper"
+
+books = OsuCtlScraper::Book.where("BA", 2015, :spring)
+books.each do |book|
+  $stdout.puts(book.values.to_csv)
+end
