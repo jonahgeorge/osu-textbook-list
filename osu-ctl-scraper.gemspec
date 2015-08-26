@@ -10,5 +10,5 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/jonahgeorge/osu-ctl-scraper'
   s.license     = 'MIT'
   s.executables << 'osu-ctl-scraper'
-  s.add_dependency 'nokogiri', '1.6.6.2'
+  s.add_dependency 'nokogiri', '~> 1.6.0'
 end
