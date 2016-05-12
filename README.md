@@ -1,3 +1,5 @@
+### ⚠️ This project is incompatible with the latest update
+
 ## OSU Current Textbook List Scraper
 [![Gem Version](https://badge.fury.io/rb/osu-ctl-scraper.svg)](http://badge.fury.io/rb/osu-ctl-scraper)
 [![Build Status](https://travis-ci.org/jonahgeorge/osu-ctl-scraper.svg?branch=master)](https://travis-ci.org/jonahgeorge/osu-ctl-scraper)
